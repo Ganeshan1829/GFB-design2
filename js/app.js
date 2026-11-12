@@ -22,6 +22,16 @@
    ["About Us","about.html","about"],
    ["Contact Us","contact.html","contact"]
   ];
+
+  let savedUser=null;
+  try{
+   savedUser=JSON.parse(localStorage.getItem("gfb_user"));
+  }catch(e){}
+
+  const userBtnText=savedUser ? `${savedUser.name.split(' ')[0]} (Account)` : "Sign In";
+  const userBtnClass=savedUser ? "nav-signin-btn signed-in" : "nav-signin-btn";
+  const userBtnDot=savedUser ? '<span class="online-indicator"></span>' : '';
+
   $("#siteHeader").innerHTML=`<div class="container nav-wrap">
     <a class="brand brand-logo-wrap" href="${isHome ? '#hero' : 'index.html'}" aria-label="Garbo Free Bharat - Home">
       <img src="assets/images/logo.png" alt="Garbo Free Bharat - Clean India Green India" class="header-logo">
@@ -30,17 +40,19 @@
     <nav class="nav-links" aria-label="Main navigation">
       ${links.map(([n,u,k])=>`<a class="${(isHome && k==='home')||(!isHome && active===k)?"active":""}" data-nav="${k}" href="${u}">${n}</a>`).join("")}
       <div class="mobile-nav-actions">
-        <a class="nav-signin-btn" href="account.html">
+        <a class="${userBtnClass}" href="account.html">
+          ${userBtnDot}
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Sign In</span>
+          <span>${userBtnText}</span>
         </a>
         <a class="nav-demo-btn" href="contact.html">Book a Demo ↗</a>
       </div>
     </nav>
     <div class="nav-actions">
-      <a class="nav-signin-btn" href="account.html" title="Sign In or Register">
+      <a class="${userBtnClass}" href="account.html" title="${savedUser ? `Signed in as ${savedUser.name}` : 'Sign In or Register'}">
+        ${userBtnDot}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Sign In</span>
+        <span>${userBtnText}</span>
       </a>
       <a class="nav-demo-btn" href="contact.html">Book a Demo ↗</a>
     </div>
@@ -107,6 +119,7 @@
 
   updateCount();
  }
+ window.renderHeader = renderHeader;
  function renderFooter(){
   const isHome=document.body.dataset.page==="home";
   const prefix=isHome?"":"index.html";

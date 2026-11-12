@@ -31,6 +31,17 @@
             <span class="eyebrow">Good to see you again</span>
             <h2>Sign in to your account</h2>
             <p class="copy">Enter your email and password to preview the account sign-in flow.</p>
+
+            <div class="prototype-autofill-banner">
+              <div class="autofill-top">
+                <span class="proto-tag">⚡ Prototype Quick Test</span>
+                <span class="proto-badge">1-Click Auto Sign In</span>
+              </div>
+              <p class="proto-text">Skip manual typing. Click below to autofill verified demo credentials and log in automatically:</p>
+              <button type="button" class="btn btn-autofill" id="autofillSignInBtn">
+                <span>⚡</span> Autofill & Sign In Instantly
+              </button>
+            </div>
             <div class="field">
               <label for="loginEmail">Email address</label>
               <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
@@ -50,6 +61,17 @@
             <span class="eyebrow">Join the GFB community</span>
             <h2>Create your account</h2>
             <p class="copy">Add your details to preview the registration experience.</p>
+
+            <div class="prototype-autofill-banner">
+              <div class="autofill-top">
+                <span class="proto-tag">⚡ Prototype Quick Test</span>
+                <span class="proto-badge">1-Click Auto Registration</span>
+              </div>
+              <p class="proto-text">Skip manual typing. Click below to generate sample user details, accept terms, and create your demo account automatically:</p>
+              <button type="button" class="btn btn-autofill" id="autofillSignUpBtn">
+                <span>⚡</span> Autofill & Create Account Instantly
+              </button>
+            </div>
             <div class="field">
               <label for="registerName">Full name</label>
               <input id="registerName" name="name" autocomplete="name" placeholder="Your full name" required>
@@ -76,14 +98,45 @@
             <p class="account-switch-copy">Already have an account? <button type="button" class="text-button" data-show-login>Sign in</button></p>
           </form>
 
-          <section id="accountPreview" class="account-preview" hidden aria-live="polite">
-            <div class="success-mark">✓</div>
-            <span class="eyebrow">Prototype account preview</span>
-            <h2 id="previewHeading">Welcome to GFB</h2>
-            <p class="copy" id="previewMessage"></p>
-            <div class="account-profile-row"><span>Account email</span><strong id="previewEmail"></strong></div>
-            <p class="notice">This is only a front-end preview. No account has been created and no credentials are verified or saved.</p>
-            <button class="btn btn-outline" id="accountSignOut" type="button">Back to sign in</button>
+          <section id="accountPreview" class="account-dashboard" hidden aria-live="polite">
+            <div class="dashboard-header">
+              <div class="dashboard-avatar" id="previewAvatar">AS</div>
+              <div class="dashboard-user-info">
+                <div class="session-badge"><span class="pulse-dot"></span> Active Prototype Session</div>
+                <h2 id="previewHeading">Welcome back, Aditya</h2>
+                <p class="copy" id="previewMessage">You are signed in to the GFB prototype customer portal.</p>
+              </div>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="dash-card">
+                <span class="dash-card-tag">Account Profile</span>
+                <div class="dash-row"><span>Full Name</span><strong id="previewName">Aditya Sharma</strong></div>
+                <div class="dash-row"><span>Email</span><strong id="previewEmail">aditya.sharma@garbofree.in</strong></div>
+                <div class="dash-row"><span>Mobile</span><strong id="previewPhone">+91 98765 43210</strong></div>
+                <div class="dash-row"><span>Membership</span><strong>GFB Verified Prototype Member</strong></div>
+              </div>
+
+              <div class="dash-card">
+                <span class="dash-card-tag">Recent Enquiry</span>
+                <div class="dash-enquiry">
+                  <strong>GFB Home Model (0.75 HP)</strong>
+                  <p>Installation feasibility check requested for standard 3.5" stainless steel sink.</p>
+                  <span class="enquiry-status-pill">Survey Scheduled · Prototype Status</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-quick-actions">
+              <a class="btn btn-dark btn-small" href="index.html#products">Explore Products →</a>
+              <a class="btn btn-outline btn-small" href="track-order.html">Track Orders</a>
+              <button class="btn btn-danger-outline btn-small" id="accountSignOut" type="button">Sign Out</button>
+            </div>
+
+            <div class="prototype-explainer-banner">
+              <strong>💡 How this prototype works:</strong>
+              <p>Your session is stored locally in your browser. As you navigate the site (Home, Products, How It Works, Installation), the header remembers your logged-in status. You can click "Sign Out" anytime to return to guest mode.</p>
+            </div>
           </section>
         </div>
 
@@ -97,6 +150,32 @@
             <li><span>02</span> Follow up on product enquiries</li>
             <li><span>03</span> View order history after launch</li>
           </ul>
+
+          <div class="proto-walkthrough-card">
+            <span class="eyebrow">Prototype Guide</span>
+            <h3>How Demo Sign-In & Sign-Up Work</h3>
+            <div class="proto-step-item">
+              <span class="step-num">1</span>
+              <div>
+                <strong>1-Click Quick Autofill</strong>
+                <p>Use the "⚡ Autofill & Sign In" or "⚡ Autofill & Create Account" buttons to bypass manual input.</p>
+              </div>
+            </div>
+            <div class="proto-step-item">
+              <span class="step-num">2</span>
+              <div>
+                <strong>Instant Front-End Validation</strong>
+                <p>Simulates real field sanitization, phone pattern check, and email formatting without hitting a backend database.</p>
+              </div>
+            </div>
+            <div class="proto-step-item">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Persistent Demo Session</strong>
+                <p>Header updates dynamically to show your name, giving you access to simulated customer portal features.</p>
+              </div>
+            </div>
+          </div>
         </aside>
       </div>
     </section>
