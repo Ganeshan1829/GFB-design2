@@ -133,7 +133,152 @@
   host.innerHTML=`<div class="success-mark">✓</div><span class="eyebrow">Demo journey completed</span><h1>Your demo order has been recorded</h1><p class="lead" style="margin:0 auto 25px">This is a local prototype confirmation. No real order or payment has been placed.</p><div class="summary-card" style="text-align:left;max-width:650px;margin:30px auto"><div class="summary-row"><span>Demo order ID</span><strong>${o.id}</strong></div><div class="summary-row"><span>Date</span><strong>${o.date}</strong></div><div class="summary-row"><span>Customer</span><strong>${o.customer.fullname}</strong></div>${o.items.map(it=>{const p=getProduct(it.id);return `<div class="summary-row"><span>${p.name} × ${it.qty}</span><strong>${money(p.price*it.qty)}</strong></div>`}).join("")}<div class="summary-row summary-total"><span>Demo total</span><strong>${money(o.total)}</strong></div><p class="copy" style="margin-top:18px">Delivery address: ${[o.customer.door,o.customer.street,o.customer.area,o.customer.city,o.customer.state,o.customer.pincode].filter(Boolean).join(", ")}</p></div><a class="btn btn-dark" href="track-order.html?id=${o.id}">Track this order</a> <a class="btn btn-outline" href="index.html#products">Continue shopping</a> <a class="btn btn-outline" href="index.html#hero">Back to home</a>`;
  }
  function contactForm(){const f=$("#contactForm");if(!f)return;f.addEventListener("submit",e=>{e.preventDefault();if(!f.reportValidity())return;$("#contactStatus").textContent="Your demo form is valid. Nothing has been sent or stored. Connect a secure form service before launch.";f.reset()})}
+ 
+ function initStoryAnimation() {
+  const story = document.getElementById('how-it-works') || document.getElementById('story');
+  if (!story) return;
+  const pin = story.querySelector('.story-pin');
+  if (!pin) return;
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const shortScreen = matchMedia('(max-height:600px) and (min-width:576px)');
+  const chapterBtns = [...document.querySelectorAll('[data-chapter]')];
+  const modeBtns = [...document.querySelectorAll('[data-mode]')];
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+
+  let manual = 0, last = -1, activeMode = 'story';
+  function isStatic() { return reduced.matches || shortScreen.matches; }
+
+  const chapters = [
+    ['THE KITCHEN VIEW', 'A familiar kitchen.<br>A new perspective.', 'A clear quartz countertop, deep stainless sink, and faucet. The GFB disposer sits seamlessly below, ready to be revealed.', 'ABOVE THE COUNTER'],
+    ['REVEAL THE HELPER', 'Below the sink.<br>Out of the way.', 'Cabinet doors open to reveal the GFB disposer. Vibration-damped 3-bolt collar mounts rigidly to standard 3.5" sink drains.', 'BELOW THE SURFACE'],
+    ['THE GRINDING CONCEPT', 'Suitable scraps.<br>Fine micro-slurry.', 'Scraps encounter 360° swivel impellers spinning at high RPM against the 304 stainless shredder ring, reducing food without sharp blades.', 'MULTI-STAGE BIO-GRIND'],
+    ['FOLLOW THE OUTLET', 'Water carries.<br>Odour-sealed exit.', 'Pulverized particles (<1.5mm) mix with water and flow through the sanitary P-trap, sealing out sewer odors as waste travels into compatible drainage.', 'WASTEWATER CONNECTION']
+  ];
+
+  const hotspotData = {
+    1: { badge: 'INPUT & SAFETY', title: 'Splash Guard Baffle & Drain Flange', desc: 'Removable acoustic neoprene baffle prevents water splashback while allowing smooth food scrap entry into the standard 3.5" stainless steel drain opening.' },
+    2: { badge: 'MOUNTING SYSTEM', title: 'Quick-Lock 3-Bolt Collar with Damper', desc: 'Heavy-duty stainless steel mounting ring with integrated vibration-dampening rubber cushion, isolating motor acoustic vibration from the kitchen sink.' },
+    3: { badge: 'GRIND CHAMBER', title: '304 Stainless Steel Multi-Stage Shredder Ring', desc: 'Stationary laser-perforated cylindrical shredder ring with multi-angle cutter teeth that shears scraps into micro-particles (<1.5mm) without dangerous sharp blades.' },
+    4: { badge: 'CENTRIFUGAL FORCE', title: 'Centrifugal Turntable & 360° Swivel Impellers', desc: 'Dual cast stainless steel swivel hammer lugs rotating at 2,800–3,500 RPM. Swivel action automatically yields if hard foreign objects enter to prevent motor jams.' },
+    5: { badge: 'POWERTRAIN', title: 'High-Torque Induction Motor & Overload Reset', desc: 'Pure copper coil windings with precision sealed ball bearings. Features automatic jam-sensing auto-reverse and manual bottom thermal overload reset.' },
+    6: { badge: 'HYDRAULICS', title: 'Anti-Odour Sanitary P-Trap & Drainage Exit', desc: 'Heavy-duty sanitary polypropylene P-trap retains a clean water barrier seal, preventing municipal sewer gases and odors from entering the kitchen.' }
+  };
+
+  function setScene(p) {
+    story.style.setProperty('--p', p);
+    story.style.setProperty('--open', clamp((p - .06) / .27));
+    story.style.setProperty('--cut', clamp((p - .46) / .15));
+    story.style.setProperty('--scraps', clamp((p - .43) / .13));
+    story.style.setProperty('--water', clamp((p - .73) / .13));
+    story.style.setProperty('--zoom', isStatic() ? 1 : 1 + Math.sin(p * Math.PI) * .045);
+    const n = Math.min(3, Math.floor(p * 4));
+    if (last !== n) {
+      last = n;
+      const label = document.getElementById('chapterLabel');
+      if (label) label.textContent = String(n + 1).padStart(2, '0') + ' / ' + chapters[n][0];
+      const title = document.getElementById('chapterTitle');
+      if (title) title.innerHTML = chapters[n][1];
+      const desc = document.getElementById('chapterDescription');
+      if (desc) desc.textContent = chapters[n][2];
+      const chip = document.getElementById('sceneChip');
+      if (chip) chip.textContent = String(n + 1).padStart(2, '0') + ' / ' + chapters[n][3];
+      chapterBtns.forEach((b, i) => {
+        b.classList.toggle('active', n === i);
+        b.setAttribute('aria-pressed', String(n === i));
+      });
+    }
+  }
+
+  function draw() {
+    if (activeMode !== 'story') return;
+    const offset = parseFloat(getComputedStyle(pin).top) || 0;
+    const storyRect = story.getBoundingClientRect();
+    const p = isStatic() ? manual : clamp((offset - storyRect.top) / Math.max(1, story.offsetHeight - pin.offsetHeight));
+    setScene(p);
+  }
+
+  let queued = false;
+  function schedule() {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(() => {
+        draw();
+        queued = false;
+      });
+    }
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  reduced.addEventListener('change', schedule);
+  shortScreen.addEventListener('change', schedule);
+
+  chapterBtns.forEach((b, i) => b.addEventListener('click', () => {
+    setMode('story');
+    const p = [0, .36, .64, .95][i];
+    if (isStatic()) {
+      manual = p;
+      setScene(p);
+    } else {
+      const offset = parseFloat(getComputedStyle(pin).top) || 0;
+      const start = window.scrollY + story.getBoundingClientRect().top - offset;
+      window.scrollTo({ top: start + p * (story.offsetHeight - pin.offsetHeight), behavior: 'smooth' });
+    }
+  }));
+
+  function setMode(m) {
+    activeMode = m;
+    modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === m));
+    if (m === 'xray') {
+      story.style.setProperty('--open', 1);
+      story.style.setProperty('--cut', 1);
+      story.style.setProperty('--scraps', 0);
+      story.style.setProperty('--water', 0);
+      const chip = document.getElementById('sceneChip');
+      if (chip) chip.textContent = '03 / X-RAY BIO-GRIND CHAMBER';
+    } else if (m === 'flow') {
+      story.style.setProperty('--open', 1);
+      story.style.setProperty('--cut', 1);
+      story.style.setProperty('--scraps', 1);
+      story.style.setProperty('--water', 1);
+      const chip = document.getElementById('sceneChip');
+      if (chip) chip.textContent = '04 / ACTIVE GRINDING & DRAINAGE FLOW';
+    } else {
+      draw();
+    }
+  }
+
+  modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+  const hotspotCard = document.getElementById('hotspotCard');
+  const hotspotPins = [...document.querySelectorAll('.hotspot-pin')];
+  hotspotPins.forEach(pinEl => {
+    const id = pinEl.dataset.spot;
+    const info = hotspotData[id];
+    if (!info) return;
+    function showSpot() {
+      hotspotPins.forEach(p => p.classList.remove('active'));
+      pinEl.classList.add('active');
+      if (hotspotCard) {
+        hotspotCard.classList.add('highlight');
+        const badge = document.getElementById('hotspotBadge');
+        if (badge) badge.textContent = 'COMPONENT 0' + id + ' / ' + info.badge;
+        const title = document.getElementById('hotspotTitle');
+        if (title) title.textContent = info.title;
+        const desc = document.getElementById('hotspotDesc');
+        if (desc) desc.textContent = info.desc;
+      }
+    }
+    pinEl.addEventListener('mouseenter', showSpot);
+    pinEl.addEventListener('click', showSpot);
+  });
+
+  draw();
+ }
+
  document.addEventListener("DOMContentLoaded",()=>{
+  initStoryAnimation();
   renderHeader();renderFooter();renderProducts();renderProductDetail();renderCart();renderCheckout();renderConfirmation();renderFaq();bindAdd();cartActions();contactForm();
  });
 })();
