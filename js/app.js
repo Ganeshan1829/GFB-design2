@@ -20,11 +20,31 @@
    ["How It Works",`${prefix}#how-it-works`,"how"],
    ["Installation",`${prefix}#installation`,"installation"],
    ["About Us","about.html","about"],
-   ["Contact","contact.html","contact"],
-   ["Track Order","track-order.html","track"],
-   ["My Account","account.html","account"]
+   ["Contact Us","contact.html","contact"]
   ];
-  $("#siteHeader").innerHTML=`<div class="container nav-wrap"><a class="brand" href="${isHome ? '#hero' : 'index.html'}">✦GFB<small>GARBO FREE BHARAT</small></a><button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button><nav class="nav-links" aria-label="Main navigation">${links.map(([n,u,k])=>`<a class="${(isHome && k==='home')||(!isHome && active===k)?"active":""}" data-nav="${k}" href="${u}">${n}</a>`).join("")}</nav><div class="nav-actions"><a class="cart-link" href="cart.html">Cart <span class="cart-count" data-cart-count>0</span></a><a class="btn btn-dark btn-small" href="contact.html">Book a demo ↗</a></div></div>`;
+  $("#siteHeader").innerHTML=`<div class="container nav-wrap">
+    <a class="brand brand-logo-wrap" href="${isHome ? '#hero' : 'index.html'}" aria-label="Garbo Free Bharat - Home">
+      <img src="assets/images/logo.png" alt="Garbo Free Bharat - Clean India Green India" class="header-logo">
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav-links" aria-label="Main navigation">
+      ${links.map(([n,u,k])=>`<a class="${(isHome && k==='home')||(!isHome && active===k)?"active":""}" data-nav="${k}" href="${u}">${n}</a>`).join("")}
+      <div class="mobile-nav-actions">
+        <a class="nav-signin-btn" href="account.html">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Sign In</span>
+        </a>
+        <a class="nav-demo-btn" href="contact.html">Book a Demo ↗</a>
+      </div>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-signin-btn" href="account.html" title="Sign In or Register">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Sign In</span>
+      </a>
+      <a class="nav-demo-btn" href="contact.html">Book a Demo ↗</a>
+    </div>
+  </div>`;
   const toggle=$(".menu-toggle"),nav=$(".nav-links");
   toggle.addEventListener("click",()=>{const open=nav.classList.toggle("open");toggle.setAttribute("aria-expanded",String(open));toggle.textContent=open?"×":"☰"});
 
@@ -46,7 +66,7 @@
    });
   });
 
-  const brand=$(".brand");
+  const brand=$(".brand-logo-wrap");
   if(brand && isHome){
    brand.addEventListener("click",e=>{
     e.preventDefault();

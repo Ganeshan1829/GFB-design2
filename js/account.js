@@ -78,4 +78,11 @@
     document.querySelectorAll(".error").forEach(error => error.textContent = "");
     showPanel("login");
   });
+
+  // Check URL hash or query on load for direct link to register tab
+  const hash = window.location.hash;
+  const urlMode = new URLSearchParams(window.location.search).get("mode");
+  if (hash === "#register" || hash === "#signup" || urlMode === "register" || urlMode === "signup") {
+    showPanel("register");
+  }
 })();
