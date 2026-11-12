@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout | GFB — Garbo Free Bharat</title><meta name="description" content="Explore GFB food-waste management solutions and installation information.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="css/style.css" rel="stylesheet"></head><body data-page="checkout">
+<header class="site-header" id="siteHeader"></header><main><section class="page-hero"><div class="container"><div class="breadcrumb"><a href="index.html">Home</a> / <a href="cart.html">Cart</a> / Checkout</div><span class="eyebrow">Prototype checkout</span><h1>Delivery <span class="gold">details.</span></h1><p class="lead">This checkout is for testing the purchase journey only. No payment details are requested or processed.</p></div></section>
+<section class="section"><div class="container form-layout"><form class="form-card" id="checkoutForm"><h2 style="font-size:27px">Customer information</h2><div class="form-grid">
+<div class="field full"><label>Full name *</label><input name="fullname" required><span class="error" data-error="fullname"></span></div>
+<div class="field"><label>Email *</label><input name="email" type="email" required><span class="error" data-error="email"></span></div>
+<div class="field"><label>Mobile number *</label><input name="phone" required inputmode="numeric" maxlength="10"><span class="error" data-error="phone"></span></div>
+<div class="field"><label>House / Door number *</label><input name="door" required><span class="error" data-error="door"></span></div>
+<div class="field"><label>Street *</label><input name="street" required><span class="error" data-error="street"></span></div>
+<div class="field"><label>Area *</label><input name="area" required><span class="error" data-error="area"></span></div>
+<div class="field"><label>City *</label><input name="city" required><span class="error" data-error="city"></span></div>
+<div class="field"><label>State *</label><input name="state" required><span class="error" data-error="state"></span></div>
+<div class="field"><label>PIN code *</label><input name="pincode" required inputmode="numeric" maxlength="6"><span class="error" data-error="pincode"></span></div>
+</div><button class="btn btn-dark" id="placeOrder" type="submit">Place demo order →</button></form><aside class="summary-card"><span class="eyebrow">Order summary</span><h3>Your selection</h3><div id="checkoutSummary"></div><p class="notice" style="margin-top:18px">Demo only. No real order is submitted, no payment is taken and no card or UPI credentials are collected.</p><a href="cart.html" class="btn btn-outline" style="width:100%;margin-top:12px">Edit cart</a></aside></div></section></main><footer class="site-footer" id="siteFooter"></footer><div class="toast" id="toast" role="status" aria-live="polite"></div><script src="js/products.js"></script><script src="js/app.js"></script></body></html>

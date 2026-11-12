@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GFB customer account sign in and registration page prototype.">
+  <title>My Account | GFB</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="account">
+  <header class="site-header" id="siteHeader"></header>
+  <main>
+    <section class="page-hero account-hero">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a> / My Account</div>
+        <span class="eyebrow">Your GFB space</span>
+        <h1>Welcome <span class="gold">back.</span></h1>
+        <p class="lead">Sign in to view your account, or create one to keep your GFB journey organised.</p>
+      </div>
+    </section>
+
+    <section class="section account-section">
+      <div class="container account-layout">
+        <div class="account-card">
+          <div class="account-tabs" role="tablist" aria-label="Account options">
+            <button class="account-tab active" id="signInTab" type="button" role="tab" aria-selected="true" aria-controls="signInPanel">Sign in</button>
+            <button class="account-tab" id="registerTab" type="button" role="tab" aria-selected="false" aria-controls="registerPanel">Create account</button>
+          </div>
+
+          <form id="signInPanel" class="account-form" novalidate>
+            <span class="eyebrow">Good to see you again</span>
+            <h2>Sign in to your account</h2>
+            <p class="copy">Enter your email and password to preview the account sign-in flow.</p>
+            <div class="field">
+              <label for="loginEmail">Email address</label>
+              <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              <small class="error" data-account-error="loginEmail"></small>
+            </div>
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="8" required><button class="password-toggle" type="button" data-toggle-password="loginPassword" aria-label="Show password">Show</button></div>
+              <small class="error" data-account-error="loginPassword"></small>
+            </div>
+            <button class="btn btn-dark account-submit" type="submit">Sign in <span>↗</span></button>
+            <p class="account-status" id="loginStatus" aria-live="polite"></p>
+            <p class="account-switch-copy">New to GFB? <button type="button" class="text-button" data-show-register>Create an account</button></p>
+          </form>
+
+          <form id="registerPanel" class="account-form" novalidate hidden>
+            <span class="eyebrow">Join the GFB community</span>
+            <h2>Create your account</h2>
+            <p class="copy">Add your details to preview the registration experience.</p>
+            <div class="field">
+              <label for="registerName">Full name</label>
+              <input id="registerName" name="name" autocomplete="name" placeholder="Your full name" required>
+              <small class="error" data-account-error="registerName"></small>
+            </div>
+            <div class="field">
+              <label for="registerEmail">Email address</label>
+              <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              <small class="error" data-account-error="registerEmail"></small>
+            </div>
+            <div class="field">
+              <label for="registerPhone">Mobile number</label>
+              <input id="registerPhone" name="phone" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" required>
+              <small class="error" data-account-error="registerPhone"></small>
+            </div>
+            <div class="field">
+              <label for="registerPassword">Create password</label>
+              <div class="password-wrap"><input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required><button class="password-toggle" type="button" data-toggle-password="registerPassword" aria-label="Show password">Show</button></div>
+              <small class="error" data-account-error="registerPassword"></small>
+            </div>
+            <label class="account-consent"><input type="checkbox" id="accountConsent" required> I agree to the account terms and privacy policy (add official links before launch).</label>
+            <button class="btn btn-dark account-submit" type="submit">Create account <span>↗</span></button>
+            <p class="account-status" id="registerStatus" aria-live="polite"></p>
+            <p class="account-switch-copy">Already have an account? <button type="button" class="text-button" data-show-login>Sign in</button></p>
+          </form>
+
+          <section id="accountPreview" class="account-preview" hidden aria-live="polite">
+            <div class="success-mark">✓</div>
+            <span class="eyebrow">Prototype account preview</span>
+            <h2 id="previewHeading">Welcome to GFB</h2>
+            <p class="copy" id="previewMessage"></p>
+            <div class="account-profile-row"><span>Account email</span><strong id="previewEmail"></strong></div>
+            <p class="notice">This is only a front-end preview. No account has been created and no credentials are verified or saved.</p>
+            <button class="btn btn-outline" id="accountSignOut" type="button">Back to sign in</button>
+          </section>
+        </div>
+
+        <aside class="account-aside">
+          <div class="account-aside-art"><span class="account-orbit"></span><img src="assets/images/gfb-product.png" alt="GFB food waste management product"></div>
+          <span class="eyebrow">A simpler kitchen journey</span>
+          <h2>Everything starts with a better choice.</h2>
+          <p class="copy">Use your account area to keep track of enquiries, product interests and order information once the secure customer system is connected.</p>
+          <ul class="account-benefits">
+            <li><span>01</span> Keep your contact details together</li>
+            <li><span>02</span> Follow up on product enquiries</li>
+            <li><span>03</span> View order history after launch</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" id="siteFooter"></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/account.js"></script>
+</body>
+</html>
