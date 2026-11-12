@@ -4,7 +4,7 @@ window.GFB_PRODUCTS = [
     short:"A considered under-sink food-waste solution for home kitchens.",
     description:"The home-focused GFB model is presented for kitchens where sink compatibility, cabinet space, plumbing and electrical requirements can be assessed before installation.",
     price:18999, oldPrice:24999, priceLabel:"Prototype reference price",
-    image:"assets/images/gfb-product.png", category:"Residential"
+    image:"assets/images/gfb-product-red.png", category:"Residential"
   },
   {
     id:"heavy", name:"GFB Heavy Model", audience:"Hotels & restaurants", model:"1.5 HP Heavy",
